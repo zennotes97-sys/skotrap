@@ -114,15 +114,42 @@
 
             <div class="pt-4">
                 <button type="submit"
-                    class="group relative w-full overflow-hidden bg-gradient-to-r from-orange-600 to-orange-500 text-white font-semibold py-3.5 px-4 rounded-2xl
+                    class="submit-btn group relative w-full overflow-hidden bg-gradient-to-r from-orange-600 to-orange-500 text-white font-semibold py-3.5 px-4 rounded-2xl
                            hover:from-orange-500 hover:to-orange-400
                            active:scale-[0.98] transition-all duration-200
-                           shadow-lg shadow-orange-600/25 hover:shadow-orange-500/40">
-                    <span class="relative z-10">Finalizar Cadastro</span>
+                           shadow-lg shadow-orange-600/25 hover:shadow-orange-500/40 disabled:cursor-not-allowed disabled:opacity-80">
+                    <span class="btn-label relative z-10 inline-flex items-center justify-center gap-2">Finalizar Cadastro</span>
+                    <span class="btn-loader hidden relative z-10 items-center justify-center gap-2">
+                        <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-opacity="0.25" stroke-width="4"/>
+                            <path d="M4 12a8 8 0 018-8" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                        Enviando...
+                    </span>
                     <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
             </div>
         </form>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('form').forEach(function (form) {
+                    form.addEventListener('submit', function () {
+                        const button = form.querySelector('button[type="submit"]');
+                        if (!button) return;
+
+                        const label = button.querySelector('.btn-label');
+                        const loader = button.querySelector('.btn-loader');
+
+                        if (label) label.classList.add('hidden');
+                        if (loader) loader.classList.remove('hidden');
+
+                        button.disabled = true;
+                        button.setAttribute('aria-busy', 'true');
+                    });
+                });
+            });
+        </script>
 
         <div class="relative text-center mt-8 pt-6 border-t border-neutral-800/80">
             <p class="text-sm text-neutral-400">
