@@ -316,6 +316,7 @@
 
     $servicosFallback = collect([
         (object) [
+            'id' => 1001,
             'nome' => 'Impressão Digital HD (DTG)',
             'descricao' => 'Processo de produção utilizando maquinário de alta tecnologia Direct-to-Garment.',
             'tecnica' => 'DTG',
@@ -324,6 +325,7 @@
             'imagem' => 'imagens/Estapagem_8.jpeg',
         ],
         (object) [
+            'id' => 1002,
             'nome' => 'Filme de Recorte & DTF Premium',
             'descricao' => 'Perfeito para logotipos, uniformes corporativos e designs esportivos que exigem alta vivacidade de cor. Trabalhamos com transfers de última geração que possuem elasticidade avançada, garantindo que a estampa acompanhe os movimentos da peça sem deformar ou desbotar.',
             'tecnica' => 'DTF',
@@ -362,6 +364,7 @@
            <!-- Exemplo de ajuste no Bloco 1 de Serviços -->
             <div class="relative rounded-3xl overflow-hidden aspect-[4/3] bg-zinc-900 shadow-2xl cursor-pointer"
                 onclick="openImageModal(this)"
+                data-id="{{ $servicoBloco1->id ?? 1001 }}"
                 data-title="{{ e($servicoBloco1->nome ?? 'Impressão Digital HD (DTG)') }}"
                 data-description="{{ e($servicoBloco1->descricao ?? 'A tecnologia Direct-to-Garment (DTG) permite aplicar a tinta diretamente nas fibras do algodão. O resultado é um toque imperceptível, definição fotográfica em milhões de cores e uma durabilidade excepcional que não racha com as lavagens. Ideada para artes complexas e ricas em detalhes.') }}"
                 data-technique="{{ e($servicoBloco1->tecnica ?? 'DTG') }}"
@@ -414,6 +417,7 @@
           <div class="relative group">
             <div class="absolute -inset-1 bg-gradient-to-r from-amber-600 to-orange-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
             <div class="relative rounded-3xl overflow-hidden aspect-[4/3] bg-zinc-900 shadow-2xl" onclick="openImageModal(this)"
+                data-id="{{ $servicoBloco2->id ?? 1002 }}"
                 data-title="{{ e($servicoBloco2->nome ?? 'Filme de Recorte & DTF Premium') }}"
                 data-description="{{ e($servicoBloco2->descricao ?? 'Perfeito para logotipos, uniformes corporativos e designs esportivos que exigem alta vivacidade de cor. Trabalhamos com transfers de última geração que possuem elasticidade avançada, garantindo que a estampa acompanhe os movimentos da peça sem deformar ou desbotar.') }}"
                 data-technique="{{ e($servicoBloco2->tecnica ?? 'DTF') }}"
