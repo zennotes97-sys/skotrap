@@ -3,6 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SKO-TRAP é uma marca premium de estampagem, especializada em camisetas, hoodies e bonés. Oferecemos estampas de alta qualidade, cores vibrantes e acabamento profissional para sua marca ou projeto.">
+    <meta name="author" content="Rute Uamusse">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Website SKO-TRAP | Estampagem Premium">
+    <meta property="og:description" content="SKO-TRAP é uma marca premium de estampagem, especializada em camisetas, hoodies e bonés. Oferecemos estampas de alta qualidade, cores vibrantes e acabamento profissional para sua marca ou projeto.">
+    <meta property="og:image" content="{{ asset('imagens/logo-SKO-TRAKP.png') }}">
   <title>SKO-TRAP | Estampagem Premium</title>
   
   <link rel="shortcut icon" href="{{ asset('imagens/logo-SKO-TRAKP.png') }}" type="image/x-icon">
