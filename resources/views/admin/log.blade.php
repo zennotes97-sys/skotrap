@@ -3,28 +3,49 @@
 @section('title', 'Log de Atividades')
 
 @section('content')
-<div class="container mx-auto py-6 px-6 min-h-screen">
-    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-8">
-        <div>
-            <h1 class="text-3xl font-bold tracking-tight text-zinc-900">Log de Atividades</h1>
-            <p class="text-sm text-zinc-500 mt-2">Monitore as ações importantes que acontecem na sua plataforma.</p>
+<div class="min-h-screen bg-slate-50 text-slate-900">
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div class="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+                <p class="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-orange-600">Segurança</p>
+                <h1 class="text-3xl font-black tracking-tight text-slate-900">Log de Atividades</h1>
+                <p class="mt-2 text-sm text-slate-600">Acompanhe as ações relevantes do painel administrativo.</p>
+            </div>
+            <div class="rounded-3xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+                <span class="text-sm text-slate-500">Registos hoje</span>
+                <p class="mt-1 text-3xl font-extrabold text-orange-600">{{ $atividades->count() }}</p>
+            </div>
         </div>
-    </div>
 
-    <div class="bg-white rounded-lg shadow p-6 text-center">
-        <div class="mx-auto w-16 h-16 flex items-center justify-center bg-orange-100 rounded-full mb-4">
-            <i class="fas fa-file-alt text-3xl text-orange-500"></i>
+        <div class="space-y-4">
+            @forelse($atividades as $atividade)
+                <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-orange-300 hover:shadow-md">
+                    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                        <div class="flex items-start gap-4">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
+                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                    <path d="M12 3v10m0 0 4-4m-4 4-4-4M5 18h14" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-base font-bold text-slate-900">{{ $atividade['titulo'] }}</p>
+                                <p class="mt-1 text-sm text-slate-600">{{ $atividade['descricao'] }}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between gap-3 md:justify-end">
+                            <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">
+                                {{ $atividade['tipo'] }}
+                            </span>
+                            <span class="text-sm text-slate-500">{{ \Carbon\Carbon::parse($atividade['data'])->diffForHumans() }}</span>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="rounded-3xl border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">
+                    Sem atividades registadas.
+                </div>
+            @endforelse
         </div>
-        <h2 class="text-xl font-semibold text-zinc-800">Página em Construção</h2>
-        <p class="text-zinc-500 mt-2 max-w-md mx-auto">
-            Para implementar um log de atividades, seria necessário criar uma tabela no banco de dados para registrar eventos como:
-        </p>
-        <ul class="text-sm text-zinc-500 list-disc list-inside inline-block text-left mt-3">
-            <li>Criação de novos usuários</li>
-            <li>Login de administradores</li>
-            <li>Criação ou exclusão de produtos</li>
-            <li>Alteração de status de pedidos</li>
-        </ul>
     </div>
 </div>
 @endsection

@@ -117,6 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const message = `Olá! 👋\nMeu nome é ${user} e gostaria de confirmar meu pedido:\n\n*Produto:* ${productName}\n*Quantidade:* ${quantity}\n*Total:* ${total}\n\nAgradeço e aguardo as próximas instruções!`;
         
         const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        localStorage.removeItem('sko_trap_cart');
         window.open(whatsappUrl, '_blank');
     });
 });

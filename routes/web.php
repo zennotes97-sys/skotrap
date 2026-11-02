@@ -85,6 +85,7 @@ Route::middleware('auth')->group(function () {
         
         // Dentro de Route::prefix('user')->name('user.')->group(function () { ...
         Route::get('/compras', [UserController::class, 'compras'])->name('compras');
+        Route::get('/contato', [UserController::class, 'contato'])->name('contato');
 
         // ADICIONADO: Processa a atualização dos dados do perfil (PUT)
         Route::put('/perfil', [UserController::class, 'update'])->name('perfil.update');
@@ -107,7 +108,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/pedidos', [AdminController::class, 'pedidos'])->name('pedidos');
         Route::get('/mensagens', [AdminController::class, 'mensagens'])->name('mensagens');
         Route::get('/usuarios', [AdminController::class, 'usuarios'])->name('usuarios');
+        Route::get('/log', [AdminController::class, 'log'])->name('log');
+        Route::get('/logs', [AdminController::class, 'log'])->name('logs');
         Route::get('/relatorios', [AdminController::class, 'relatorios'])->name('relatorios');
+        Route::post('/relatorios/gerar', [AdminController::class, 'gerarRelatorio'])->name('relatorios.gerar');
+        Route::get('/relatorios/gerar', [AdminController::class, 'gerarRelatorio'])->name('relatorios.gerar.get');
         Route::get('/usuarios/{id}/edit', [AdminController::class, 'editUsuario'])->name('usuarios.edit');
         Route::put('/usuarios/{id}', [AdminController::class, 'updateUsuario'])->name('usuarios.update');
         Route::delete('/usuarios/{id}', [AdminController::class, 'destroyUsuario'])->name('usuarios.destroy');

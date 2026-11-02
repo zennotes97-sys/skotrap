@@ -13,29 +13,50 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        // 1. Cálculos e estatísticas para os cards
-        $total_pedidos = DB::table('pedidos')->where('usuario_id', $user->id)->count();
-        $total_compras = DB::table('compras')->where('usuario_id', $user->id)->count();
-        $total_gasto = DB::table('compras')->where('usuario_id', $user->id)->sum('preco') ?? 0;
+        $total_pedidos = DB::table('pedidos')
+            ->where('usuario_id', $user->id)
+            ->count();
+
+        $total_compras = DB::table('compras')
+            ->where('usuario_id', $user->id)
+            ->count();
+
+        $valorPedidos = DB::table('pedidos')
+            ->where('usuario_id', $user->id)
+            ->sum('valor_total') ?? 0;
+
+        $valorCompras = DB::table('compras')
+            ->where('usuario_id', $user->id)
+            ->selectRaw('SUM(COALESCE(preco, 0) * COALESCE(quantidade, 1)) as total')
+            ->value('total') ?? 0;
+
+        $total_gasto = (float) $valorPedidos + (float) $valorCompras;
+
         $mensagens_nao_lidas = DB::table('mensagens')
             ->where('usuario_id', $user->id)
             ->where('status', 'nao_lido')
             ->count();
 
-        // 2. Busca os últimos 5 pedidos usando o Query Builder do Laravel
         $pedidos = DB::table('pedidos')
             ->where('usuario_id', $user->id)
+            ->select(
+                'id',
+                'numero_pedido',
+                'descricao',
+                'valor_total as valor',
+                'status',
+                'data_criacao'
+            )
             ->orderBy('data_criacao', 'desc')
             ->limit(5)
             ->get();
 
-        // 3. Envia os dados limpos para a View
         return view('user.dashboard', compact(
-            'user', 
-            'total_pedidos', 
-            'total_compras', 
-            'total_gasto', 
-            'mensagens_nao_lidas', 
+            'user',
+            'total_pedidos',
+            'total_compras',
+            'total_gasto',
+            'mensagens_nao_lidas',
             'pedidos'
         ));
     }
@@ -44,24 +65,50 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        // 1. Calcula o total gasto somando diretamente do banco de dados (Mais performático)
-        $total_gasto = DB::table('compras')
-            ->where('usuario_id', $user->id)
-            ->sum(DB::raw('preco * quantidade')) ?? 0;
+        $compras = DB::table('pedidos as p')
+            ->leftJoin('pedido_itens as pi', 'p.id', '=', 'pi.pedido_id')
+            ->leftJoin('estampas as e', 'pi.estampa_id', '=', 'e.id')
+            ->where('p.usuario_id', $user->id)
+            ->select(
+                'p.id',
+                'p.numero_pedido',
+                'p.status',
+                'p.valor_total',
+                'p.data_criacao',
+                'e.nome as produto',
+                DB::raw('COALESCE(pi.quantidade, 1) as quantidade'),
+                DB::raw('COALESCE(pi.subtotal, p.valor_total) as subtotal')
+            )
+            ->orderBy('p.data_criacao', 'desc')
+            ->get();
 
-        // 2. Busca as compras paginadas (10 por página) com paginação nativa
-        $compras = DB::table('compras')
-            ->where('usuario_id', $user->id)
-            ->orderBy('data_compra', 'desc')
-            ->paginate(10);
+        if ($compras->isEmpty()) {
+            $compras = DB::table('compras')
+                ->where('usuario_id', $user->id)
+                ->orderBy('data_compra', 'desc')
+                ->get();
+        }
 
-        // 3. Injeta as variáveis limpas na View correspondente
+        $total_gasto = $compras->sum(function ($item) {
+            $valor = $item->subtotal ?? $item->valor_total ?? ($item->preco ?? 0);
+            $quantidade = $item->quantidade ?? 1;
+
+            return (float) $valor * (float) $quantidade;
+        });
+
         return view('user.compras', compact('user', 'total_gasto', 'compras'));
     }
 
     public function pedidos() 
     {
         return view('user.pedidos');
+    }
+
+    public function contato()
+    {
+        $user = Auth::user();
+
+        return view('user.contato', compact('user'));
     }
 
     public function criarPedido(Estampa $estampa)

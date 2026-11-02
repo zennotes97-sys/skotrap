@@ -59,4 +59,5 @@ class HomePageEstampasTest extends TestCase
         $response->assertOk();
         $response->assertSee('data-id="', false);
     }
+
 }

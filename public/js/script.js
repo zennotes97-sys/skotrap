@@ -773,6 +773,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const message = lines.join('\n');
     const whatsappUrl = `https://wa.me/${storeWhatsapp}?text=${encodeURIComponent(message)}`;
+
+    localStorage.removeItem('sko_trap_cart');
+    updateCartBadge();
+    renderCartInPedidos();
     window.open(whatsappUrl, '_blank');
   }
 

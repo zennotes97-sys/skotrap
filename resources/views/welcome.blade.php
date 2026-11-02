@@ -51,45 +51,51 @@
 
       <div class="hidden md:flex items-center gap-4">
         @auth
-        <div class="relative group z-[9999]">
-          <button class="px-5 py-2.5 bg-orange-50 text-black rounded-3xl font-semibold transition-all duration-300 flex items-center gap-3 hover:bg-orange-600">
-            <i class="fas fa-user"></i> {{ auth()->user()->nome }}
-               <span id="cartCountBadgeNav" class="hidden min-w-5 h-5 rounded-full bg-black text-[10px] font-bold text-orange-400 flex items-center justify-center px-1">0</span>
-            <i class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
-          </button>
+            <div class="relative group z-[9999]">
+                <button class="flex items-center gap-3 rounded-3xl bg-orange-50 px-5 py-2.5 font-semibold text-black transition-all duration-300 hover:bg-orange-600">
+                    <span class="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-900 text-xs text-orange-400">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    <span class="max-w-[140px] truncate">{{ auth()->user()->nome }}</span>
+                    <span id="cartCountBadgeNav" class="hidden h-5 min-w-5 rounded-full bg-black px-1 text-[10px] font-bold text-orange-400">0</span>
+                    <i class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
+                </button>
 
-          <div class="absolute right-0 top-full mt-2 w-48 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999] pointer-events-none group-hover:pointer-events-auto">
-            <a href="{{ route('user.dashboard') }}" class="block px-6 py-3 text-white hover:bg-zinc-800 rounded-t-2xl transition-colors flex items-center gap-2">
-              <i class="fas fa-chart-line text-orange-500"></i> Meu Painel
-            </a>
-            <a href="{{ route('user.perfil') }}" class="block px-6 py-3 text-white hover:bg-zinc-800 transition-colors flex items-center gap-2 border-t border-zinc-800">
-              <i class="fas fa-user-edit text-orange-500"></i> Perfil
-            </a>
-            <a href="{{ route('user.pedidos') }}" class="block px-6 py-3 text-white hover:bg-zinc-800 transition-colors flex items-center gap-2 border-t border-zinc-800">
-              <i class="fas fa-shopping-bag text-orange-500"></i> Pedidos
-                <span id="cartCountBadgeMenu" class="ml-auto hidden rounded-full bg-orange-500 px-2 py-0.5 text-[10px] font-bold text-black">0</span>
-            </a>
-            @if(auth()->user()->is_admin)
-            <a href="{{ route('admin.dashboard') }}" class="block px-6 py-3 text-white hover:bg-zinc-800 transition-colors flex items-center gap-2 border-t border-zinc-800">
-              <i class="fas fa-crown text-orange-500"></i> Admin
-            </a>
-            @endif
+                <div class="absolute right-0 top-full mt-2 w-56 rounded-2xl border border-zinc-800 bg-zinc-900 shadow-2xl opacity-0 invisible transition-all duration-300 group-hover:visible group-hover:opacity-100 z-[9999] pointer-events-none group-hover:pointer-events-auto">
+                    <div class="border-b border-zinc-800 px-4 py-3 text-sm text-zinc-300">
+                        <p class="text-xs uppercase tracking-[0.2em] text-zinc-500">Conta</p>
+                        <p class="mt-1 truncate font-semibold text-white">{{ auth()->user()->nome }}</p>
+                    </div>
+                    <a href="{{ route('user.dashboard') }}" class="flex items-center gap-2 px-4 py-3 text-sm text-white transition-colors hover:bg-zinc-800">
+                        <i class="fas fa-chart-line w-4 text-orange-500"></i> Painel
+                    </a>
+                    <a href="{{ route('user.perfil') }}" class="flex items-center gap-2 border-t border-zinc-800 px-4 py-3 text-sm text-white transition-colors hover:bg-zinc-800">
+                        <i class="fas fa-user-edit w-4 text-orange-500"></i> Perfil
+                    </a>
+                    <a href="{{ route('user.pedidos') }}" class="flex items-center gap-2 border-t border-zinc-800 px-4 py-3 text-sm text-white transition-colors hover:bg-zinc-800">
+                        <i class="fas fa-shopping-bag w-4 text-orange-500"></i> Pedidos
+                        <span id="cartCountBadgeMenu" class="ml-auto hidden rounded-full bg-orange-500 px-2 py-0.5 text-[10px] font-bold text-black">0</span>
+                    </a>
+                    @if(auth()->user()->is_admin)
+                        <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 border-t border-zinc-800 px-4 py-3 text-sm text-white transition-colors hover:bg-zinc-800">
+                            <i class="fas fa-crown w-4 text-orange-500"></i> Admin
+                        </a>
+                    @endif
+                    <form action="{{ route('logout') }}" method="POST" class="border-t border-zinc-800">
+                        @csrf
+                        <button type="submit" class="flex w-full items-center gap-2 px-4 py-3 text-left text-sm text-red-400 transition-colors hover:bg-zinc-800">
+                            <i class="fas fa-sign-out-alt w-4"></i> Sair
+                        </button>
+                    </form>
+                </div>
+            </div>
+        @endauth
 
-            <form action="{{ route('logout') }}" method="POST" class="block border-t border-zinc-800">
-              @csrf
-              <button type="submit" class="w-full text-left px-6 py-3 text-red-400 hover:bg-zinc-800 rounded-b-2xl transition-colors flex items-center gap-2">
-                <i class="fas fa-sign-out-alt"></i> Sair
-              </button>
-            </form>
-          </div>
-        </div>
-      @endauth
-
-      @guest
-      <a href="{{ route('login') }}" class="px-5 py-2.5 bg-transparent border-2 border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black rounded-3xl font-semibold transition-all duration-300 flex items-center gap-2">Login</a>
-      <a href="{{ route('registro') }}" class="px-5 py-2.5 bg-orange-500 text-black hover:bg-orange-600 rounded-3xl font-semibold transition-all duration-300 flex items-center gap-2">Registro</a>
-      @endguest
-     </div>
+        @guest
+            <a href="{{ route('login') }}" class="px-5 py-2.5 bg-transparent border-2 border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black rounded-3xl font-semibold transition-all duration-300 flex items-center gap-2">Login</a>
+            <a href="{{ route('registro') }}" class="px-5 py-2.5 bg-orange-500 text-black hover:bg-orange-600 rounded-3xl font-semibold transition-all duration-300 flex items-center gap-2">Registro</a>
+        @endguest
+      </div>
 
       <button id="mobile-menu-btn" class="md:hidden text-white text-2xl focus:outline-none p-2">
         <i class="fas fa-bars"></i>
@@ -104,12 +110,30 @@
       <a href="#sobre" class="block py-2 text-lg hover:text-orange-400"><i class="fas fa-info-circle mr-2"></i> Sobre</a>
       <a href="#contacto" class="block py-2 text-lg hover:text-orange-400"><i class="fas fa-envelope mr-2"></i> Contacto</a>
       <hr class="border-zinc-800">
-      <div class="flex flex-col gap-3 pt-2">
-        @guest
-        <a href="{{ route('login') }}" class="w-full text-center py-3 border border-orange-500 text-orange-400 rounded-xl">Login</a>
-        <a href="{{ route('registro') }}" class="w-full text-center py-3 bg-orange-500 text-black font-semibold rounded-xl">Registro</a>
-        @endguest
-      </div>
+
+      @auth
+          <div class="rounded-2xl border border-zinc-800 bg-zinc-900 p-3">
+              <p class="text-xs uppercase tracking-[0.2em] text-zinc-500">Sessão</p>
+              <p class="mt-2 text-base font-semibold text-white">{{ auth()->user()->nome }}</p>
+          </div>
+          <a href="{{ route('user.dashboard') }}" class="block rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-sm text-white hover:bg-zinc-800"><i class="fas fa-chart-line mr-2 text-orange-500"></i> Painel</a>
+          <a href="{{ route('user.perfil') }}" class="block rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-sm text-white hover:bg-zinc-800"><i class="fas fa-user-edit mr-2 text-orange-500"></i> Perfil</a>
+          <a href="{{ route('user.pedidos') }}" class="block rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-sm text-white hover:bg-zinc-800"><i class="fas fa-shopping-bag mr-2 text-orange-500"></i> Pedidos</a>
+          @if(auth()->user()->is_admin)
+              <a href="{{ route('admin.dashboard') }}" class="block rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-sm text-white hover:bg-zinc-800"><i class="fas fa-crown mr-2 text-orange-500"></i> Admin</a>
+          @endif
+          <form action="{{ route('logout') }}" method="POST">
+              @csrf
+              <button type="submit" class="w-full rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-left text-sm font-semibold text-red-400 hover:bg-red-500/20">
+                  <i class="fas fa-sign-out-alt mr-2"></i> Sair
+              </button>
+          </form>
+      @endauth
+
+      @guest
+          <a href="{{ route('login') }}" class="w-full text-center py-3 border border-orange-500 text-orange-400 rounded-xl">Login</a>
+          <a href="{{ route('registro') }}" class="w-full text-center py-3 bg-orange-500 text-black font-semibold rounded-xl">Registro</a>
+      @endguest
     </div>
   </nav>
 

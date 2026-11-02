@@ -179,15 +179,23 @@
                         <span>Promoções</span>
                     </a>
                     <a href="/admin/log" class="group flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->is('admin/log') ? 'bg-zinc-900 text-white border-l-2 border-orange-500 pl-[14px]' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50' }}">
-                        <i class="fas fa-file-alt text-base w-5 {{ request()->is('admin/log') ? 'text-orange-500' : 'text-zinc-600 group-hover:text-orange-400' }}"></i>
+                        <svg class="h-5 w-5 {{ request()->is('admin/log') ? 'text-orange-500' : 'text-zinc-600 group-hover:text-orange-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <path d="M8 3.5h9A2.5 2.5 0 0 1 19.5 6v12A2.5 2.5 0 0 1 17 20.5H8A2.5 2.5 0 0 1 5.5 18V6A2.5 2.5 0 0 1 8 3.5Z" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8 8h8M8 12h8M8 16h5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                         <span>Log de Atividades</span>
                     </a>
                     <a href="/admin/configuracoes" class="group flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->is('admin/configuracoes') ? 'bg-zinc-900 text-white border-l-2 border-orange-500 pl-[14px]' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50' }}">
-                        <i class="fas fa-cogs text-base w-5 {{ request()->is('admin/configuracoes') ? 'text-orange-500' : 'text-zinc-600 group-hover:text-orange-400' }}"></i>
+                        <svg class="h-5 w-5 {{ request()->is('admin/configuracoes') ? 'text-orange-500' : 'text-zinc-600 group-hover:text-orange-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <path d="M12 3.5v3m0 14v3m8.5-8.5h-3M6.5 12h-3m14.24 6.74-2.12-2.12M8.38 8.38 6.26 6.26m11.48 0-2.12 2.12M8.38 15.62l-2.12 2.12" stroke-linecap="round"/>
+                            <circle cx="12" cy="12" r="3.5"/>
+                        </svg>
                         <span>Configurações</span>
                     </a>
                     <a href="/admin/relatorios" class="group flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->is('admin/relatorios') ? 'bg-zinc-900 text-white border-l-2 border-orange-500 pl-[14px]' : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50' }}">
-                        <i class="fas fa-chart-pie text-base w-5 {{ request()->is('admin/relatorios') ? 'text-orange-500' : 'text-zinc-600 group-hover:text-orange-400' }}"></i>
+                        <svg class="h-5 w-5 {{ request()->is('admin/relatorios') ? 'text-orange-500' : 'text-zinc-600 group-hover:text-orange-400' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <path d="M5 18V9m7 9V5m7 13v-7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                         <span>Relatórios</span>
                     </a>
 
